@@ -122,12 +122,11 @@ relative to the repo root; override it with the `RESGA_SAEGA_ROOT` env var.
 ## Citation
 
 ```bibtex
-@article{resga_saega_2026,
-  title   = {Bridging Mechanistic Interpretability and Prompt Engineering with
-             Gradient Ascent for Interpretable Persona Control},
-  journal = {Transactions on Machine Learning Research (TMLR)},
-  year    = {2026},
-  url     = {https://openreview.net/forum?id=dcmHPxgo4c}
+@article{saini2026bridging,
+  title={Bridging Mechanistic Interpretability and Prompt Engineering with Gradient Ascent for Interpretable Persona Control},
+  author={Saini, Harshvardhan and Tang, Yiming and Liu, Dianbo},
+  journal={arXiv preprint arXiv:2601.02896},
+  year={2026}
 }
 ```
 
