@@ -1,0 +1,17 @@
+# Multi-GPU sweep definition consumed by sweep.py.
+# A task is created for every (model x persona x method x fluency x layer) and
+# distributed round-robin across `gpus`. Each task shells out to main.py.
+
+gpus: ["cuda:0"]
+
+models:
+  - name: "google/gemma-3-4b-it"
+    tag: "gemma"
+    # SAEGA only: SAE to load (ignored by RESGA / residual runs).
+    sae_release: null
+    sae_hook_point: null
+
+personas: ["hallucination", "myopic"]
+methods: ["residual"]            # residual = RESGA, sae = SAEGA
+fluencies: ["strict", "medium", "loose"]
+layers: [8, 14, 18, 25]

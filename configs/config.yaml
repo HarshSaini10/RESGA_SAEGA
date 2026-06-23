@@ -1,0 +1,27 @@
+# Global defaults shared by every RESGA / SAEGA run.
+# Per-persona settings live in configs/personas.yaml; sweep axes in configs/sweep.yaml.
+
+device: "cuda:0"
+seed: 42
+
+model:
+  # Default model; override per run with --model_name.
+  name: "meta-llama/Llama-3.1-8B-Instruct"
+  dtype: "float32"            # main pipeline runs in fp32 for stable gradients
+  # Local Hugging Face cache. Override with the HF_HOME env var if preferred.
+  cache_dir: "./hf_cache"
+
+# Fluent gradient-ascent (EPO) hyperparameters. Identical across personas.
+epo:
+  seq_len: 8
+  population_size: 16
+  explore_per_pop: 32
+  iters: 300
+  batch_size: 2
+  restart_frequency: 50
+
+# Fluency presets control the cross-entropy penalty that keeps prompts readable.
+fluency_presets:
+  strict: {x_penalty_min: 2.0,  x_penalty_max: 12.0, restart_xentropy: 3.0, restart_xentropy_max_mult: 1.5}
+  medium: {x_penalty_min: 0.5,  x_penalty_max: 4.0,  restart_xentropy: 1.5, restart_xentropy_max_mult: 2.0}
+  loose:  {x_penalty_min: 0.05, x_penalty_max: 0.5,  restart_xentropy: 0.5, restart_xentropy_max_mult: 2.0}

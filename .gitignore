@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# Experiment outputs / logs (regenerable)
+results/
+results_rebuttal/
+runs/
+wandb/
+artifacts/
+analysis/
+*.log
+
+# Local model / HF caches
+hf_cache/
+.cache/
+
+# Raw datasets are not redistributed -- see data/README.md to obtain them.
+data/*
+!data/README.md
+
+# Secrets / local env
+.env
+*.key
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

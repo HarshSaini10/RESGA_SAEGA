@@ -1,0 +1,60 @@
+# Per-persona definitions for the unified RESGA / SAEGA driver (main.py).
+#
+# The optimization objective is unified across personas: we always extract a
+# signature direction  delta = mean(good) - mean(bad)  and maximize the
+# projection of the last-token residual (RESGA) or the weighted SAE activations
+# (SAEGA) onto it. Each persona only differs in: dataset, how the contrastive
+# (good, bad) texts are built, whether a question context is prepended during
+# optimization, and how the resulting prompt is scored.
+
+sycophancy:
+  dataset: data/sycophancy.csv
+  train_frac: 0.8
+  signature:
+    template: answer_char        # good = answer_not_matching_behavior, bad = answer_matching_behavior
+    sample_n: 256
+  runner:
+    context_template: null       # optimize the prompt directly (no question prepended)
+    normalize: false
+    full_logits: true            # fluency penalty over the whole optimized sequence
+  context: {n_samples: 0}
+  eval:
+    type: choice                 # rate = fraction where the model prefers the matching (persona) answer
+    answer_a: " (A) Agree"
+    answer_b: " (B) Disagree"
+    metric_name: sycophancy_rate
+  out_dir: results/runs/sycophancy
+
+myopic:
+  dataset: data/myopic-reward.jsonl
+  train_frac: 0.8
+  signature:
+    template: answer_char
+    sample_n: 256
+  runner:
+    context_template: "Question: {question}\nAnswer:"
+    normalize: false
+    full_logits: false
+  context: {n_samples: 16}
+  eval:
+    type: choice
+    answer_a: " (A)"
+    answer_b: " (B)"
+    metric_name: myopia_rate
+  out_dir: results/runs/myopic
+
+hallucination:
+  dataset: data/truthfulqa_logprob.csv
+  train_frac: 0.5
+  signature:
+    template: truthful_qa        # good = "Q\nA: true", bad = "Q\nA: random incorrect"
+    sample_n: 200
+  runner:
+    context_template: "Question: {question}"
+    normalize: false
+    full_logits: false
+  context: {n_samples: 32}
+  eval:
+    type: truthfulqa
+    metric_name: hallucination_rate
+  out_dir: results/runs/hallucination

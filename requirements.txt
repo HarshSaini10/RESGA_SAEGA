@@ -1,0 +1,29 @@
+# Core deep learning / interpretability stack
+torch>=2.1
+transformers>=4.44
+transformer-lens>=2.0
+sae-lens>=4.0
+
+# SAE loading utilities used by the conscientiousness/myopic and hallucination runners.
+# Install from source if the PyPI package does not expose `dictionary_learning.utils`:
+#   pip install git+https://github.com/saprmarks/dictionary_learning.git
+dictionary-learning
+
+# Data handling / metrics / plotting
+datasets>=2.18
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+pyyaml
+tqdm
+
+# ProTeGi baseline talks to the OpenRouter HTTP API
+httpx
+
+# Optional:
+#   wandb  -> experiment logging (imports are guarded / optional)
+#   modal  -> only needed for dreamy/dreamy/experiment.py (original cloud-run harness)
+# wandb
+# modal
